@@ -2,8 +2,7 @@
 ---
 
 ## todo 
-* split video to frames
-* reduce same frames
+* ~split video to frames~
 * detect faces
 * reduce same faces
 * 
