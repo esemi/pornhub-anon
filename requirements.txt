@@ -1,3 +1,4 @@
 opencv-python
 av
 Pillow
+face_recognition
