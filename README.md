@@ -3,9 +3,13 @@
 
 ## todo 
 * ~split video to frames~
-* detect faces
-* reduce same faces
-* 
+* ~detect faces~
+* ~detect faces cascade~
+* clustering same faces
+* collect face DBs
+* crawl public face DBs
+* compare our DBs abd public DBs
+* FindFace like service use for unknown persons
 
 
 ## links
