@@ -5,10 +5,15 @@
 * ~split video to frames~
 * ~detect faces~
 * ~detect faces cascade~
-* clustering same faces
-* collect face DBs
-* crawl public face DBs
-* compare our DBs abd public DBs
+* ~clustering same faces~
+* crawl videos
+* collect faces DB
+
+## todo optional
+* crawl public faces DB
+* filter open eyes only
+* select best faces frame (RnD)
+* compare our abd public DBs
 * FindFace like service use for unknown persons
 
 

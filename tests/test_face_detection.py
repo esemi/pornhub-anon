@@ -19,7 +19,7 @@ class TestDetectors(unittest.TestCase):
         opencv_lbp_detection function positive test: 100 total; 79 success; success rate: 0.79
         facelib_hog_detection function positive test: 100 total; 84 success; success rate: 0.84
         facelib_cnn_detection function positive test: 100 total; 77 success; success rate: 0.77
-        cascade_detection function positive test: 100 total; 66 success; success rate: 0.66
+        cascade_detection function positive test: 100 total; 77 success; success rate: 0.77
         """
         for function in ALL:
             success_detected = 0

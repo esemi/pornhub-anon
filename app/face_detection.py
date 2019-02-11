@@ -69,7 +69,7 @@ def opencv_lbp_detection(filepath: str) -> Tuple[int, list]:
 
 
 def cascade_detection(filepath: str) -> Tuple[int, list]:
-    if all([opencv_lbp_detection(filepath)[0], facelib_hog_detection(filepath)[0]]):
+    if all([opencv_lbp_detection(filepath)[0], opencv_haar_detection(filepath)[0], facelib_hog_detection(filepath)[0]]):
         return facelib_cnn_detection(filepath)
     return 0, []
 
@@ -79,8 +79,7 @@ def extract_faces(frames_path: str, faces_path: str, detection_function) -> int:
     faces_counter = 0
     for root, dirs, files in os.walk(frames_path):
         for i in files:
-            res = detection_function(os.path.join(frames_path, i))[0]
-            if res:
+            if detection_function(os.path.join(frames_path, i))[0]:
                 shutil.copy(os.path.join(frames_path, i), faces_path)
                 faces_counter += 1
     return faces_counter
