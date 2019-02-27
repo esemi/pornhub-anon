@@ -30,6 +30,8 @@ class TestDetectors(unittest.TestCase):
                     res = function(os.path.join(TEST_FACES_FOLDER, i))[0]
                     if res == 1:
                         success_detected += 1
+            self.assertEqual(100, total_images)
+            self.assertAlmostEqual(0.8, float(success_detected) / float(total_images), delta=0.15)
             print("%s function positive test: %d total; %d success; success rate: %.2f" %
                   (function.__name__, total_images, success_detected,
                    float(success_detected) / float(total_images)))

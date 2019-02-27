@@ -19,7 +19,7 @@ class TestEncoding(unittest.TestCase):
 
 class TestClustering(unittest.TestCase):
     def test_smoke(self):
-        encodings = encode_faces(TEST_FACES_FOLDER, limit_files=10)
+        encodings = encode_faces(TEST_FACES_FOLDER, limit_files=20)
         clean_destination(TEST_FRAMES_FOLDER % 'clusters')
         res = clustering_faces(TEST_FACES_FOLDER, TEST_FRAMES_FOLDER % 'clusters', encodings)
         self.assertEqual(1, res)
