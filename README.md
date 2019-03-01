@@ -6,7 +6,7 @@
 * ~detect faces~
 * ~detect faces cascade~
 * ~clustering same faces~
-* crawl videos
+* crawl videos (need select source)
 * collect faces DB
 
 ## todo optional

@@ -5,3 +5,4 @@ face_recognition
 matplotlib
 scikit-learn
 imutils
+aiohttp
