@@ -6,7 +6,8 @@
 * ~detect faces~
 * ~detect faces cascade~
 * ~clustering same faces~
-* crawl videos (need select source)
+* ~crawl videos (need select source)~
+* deploy w/ supervisor
 * collect faces DB (AWS Rekognition)
 
 ## todo optional
