@@ -4,10 +4,8 @@ from typing import Tuple
 
 import face_recognition
 
-from app.utils import clean_destination
-
-HAAR_CASCADE_XML = './../data/haarcascade_frontalface_default.xml'
-LBP_CASCADE_XML = './../data/lbpcascade_frontalface_improved.xml'
+from config import HAAR_CASCADE_XML, LBP_CASCADE_XML
+from utils import clean_destination
 
 
 def facelib_hog_detection(filepath: str) -> Tuple[int, list]:

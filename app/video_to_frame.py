@@ -1,6 +1,6 @@
 import re
 
-from app.utils import clean_destination
+from utils import clean_destination
 
 FPS = 0.43  # count frames per second of video
 

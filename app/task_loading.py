@@ -14,6 +14,7 @@ import aiohttp
 
 from config import STOP_TAGS, FIND_LINK_LOCK, DOWNLOAD_LOCK, SOURCE_PATH, FIND_LINK_TIMEOUT, DOWNLOAD_TIMEOUT
 from storage import create_conn, exist_video, add_video, close_conn
+from utils import video_stream_path
 
 
 async def xvideos_source_file():
@@ -102,9 +103,8 @@ async def main(limit: int = 1):
             stat['not found link'] += 1
             continue
 
-        result_filepath = os.path.sep.join([dst_path, '%s.mp4' % video_id])
         loading_result = await download_video_stream(video_loading_rate_lock, download_link, DOWNLOAD_TIMEOUT,
-                                                     result_filepath)
+                                                     video_stream_path(video_id))
 
         if not loading_result:
             logging.debug('skip by not loaded stream')

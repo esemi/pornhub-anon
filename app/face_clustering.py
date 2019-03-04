@@ -7,8 +7,8 @@ import numpy as np
 from sklearn.cluster import DBSCAN
 import face_recognition
 
-from app.face_detection import facelib_cnn_detection
-from app.utils import clean_destination
+from face_detection import facelib_cnn_detection
+from utils import clean_destination
 
 
 def encode_faces(faces_path: str, limit_files=None) -> List[dict]:
