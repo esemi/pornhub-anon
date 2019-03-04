@@ -9,18 +9,34 @@ import re
 from asyncio import Semaphore
 from collections import Counter
 from typing import Optional
+import zipfile
 
 import aiohttp
 
-from config import STOP_TAGS, FIND_LINK_LOCK, DOWNLOAD_LOCK, SOURCE_PATH, FIND_LINK_TIMEOUT, DOWNLOAD_TIMEOUT
+from config import (STOP_TAGS, FIND_LINK_LOCK, DOWNLOAD_LOCK, SOURCE_PATH, FIND_LINK_TIMEOUT, DOWNLOAD_TIMEOUT,
+                    DB_FILE_CACHE_PATH, DB_FILE_URL)
 from storage import create_conn, exist_video, add_video, close_conn
 from utils import video_stream_path
 
 
 async def xvideos_source_file():
     # todo load db if it doesnt exist
-    source_csv_path = '/home/esemi/Downloads/xvideos.com-db.csv'
-    with open(source_csv_path) as infile:
+    if not os.path.exists(DB_FILE_CACHE_PATH):
+        logging.info('not found cached db - load new file')
+        async with aiohttp.ClientSession() as session:
+            async with session.get(DB_FILE_URL) as resp:
+                if resp.status != 200:
+                    raise RuntimeError('source DB not available now %s', DB_FILE_URL)
+                zip_path = '/tmp/db.csv.zip'
+                with open(zip_path, 'wb') as fd:
+                    async for data in resp.content.iter_chunked(2048):
+                        fd.write(data)
+        zip_ref = zipfile.ZipFile(zip_path, 'r')
+        zip_ref.extract('xvideos.com-db.csv', '/tmp')
+        zip_ref.close()
+        os.unlink(zip_path)
+
+    with open(DB_FILE_CACHE_PATH) as infile:
         for i in infile:
             row_data = i.split(';')
             tags = row_data[5].split(',')
@@ -61,7 +77,7 @@ async def download_video_stream(lock: Semaphore, link: str, timeout: int, dst_pa
                         return None
 
                     with open(dst_path, 'wb') as fd:
-                        async for data in resp.content.iter_chunked(1024):
+                        async for data in resp.content.iter_chunked(4096):
                             fd.write(data)
                     return True
             except Exception as e:

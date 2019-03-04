@@ -58,8 +58,7 @@ def deploy(c):
     c.run('cd {} && {}/bin/pip install -r requirements.txt'.format(DEPLOY_PATH, VENV_PATH))
 
     # deploy (move build to production)
-    if not c.run("test -d {}".format(BACKUP_PATH), warn=True):
+    if c.run("test -d {}".format(BACKUP_PATH), warn=True):
         c.run('rm -rf {}'.format(BACKUP_PATH))
     c.run('mv %s %s' % (APP_PATH, BACKUP_PATH))
     c.run('mv %s %s' % (DEPLOY_PATH, APP_PATH))
-    c.run('supervisorctl restart %s' % SERVICE_NAME)

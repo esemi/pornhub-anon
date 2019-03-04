@@ -14,8 +14,10 @@ STOP_TAGS = {
 HOME_DIR = Path.home()
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-FIND_LINK_LOCK = 2
-DOWNLOAD_LOCK = 10
+FIND_LINK_LOCK = 200
+DOWNLOAD_LOCK = 1000
+DB_FILE_CACHE_PATH = '/tmp/xvideos.com-db.csv'
+DB_FILE_URL = 'https://static-egc.xvideos-cdn.com/xvideos.com-db.csv.zip'
 SOURCE_PATH = str(HOME_DIR.joinpath('pornanon-sources'))
 FACES_PATH = str(HOME_DIR.joinpath('pornanon-faces'))
 TMP_PATH = '/tmp/pornanon'
