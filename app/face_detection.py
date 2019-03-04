@@ -20,32 +20,6 @@ def facelib_cnn_detection(filepath: str) -> Tuple[int, list]:
     return len(face_locations), face_locations
 
 
-def show_face_image(filepath: str, detection_func):
-    from PIL import Image, ImageDraw
-    import cv2
-
-    face_locations = detection_func(filepath)[1]
-
-    if 'facelib' in detection_func.__name__:
-        image = face_recognition.load_image_file(filepath)
-
-        pil_image = Image.fromarray(image)
-        draw = ImageDraw.Draw(pil_image)
-
-        for i, (top, right, bottom, left) in enumerate(face_locations):
-            draw.rectangle(((left, top), (right, bottom)), outline=(0, 0, 255))
-        del draw
-
-        if face_locations:
-            pil_image.show()
-    elif 'opencv' in detection_func.__name__:
-        img = cv2.imread(filepath)
-        for (x, y, w, h) in face_locations:
-            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        cv2.imshow(detection_func.__name__, img)
-        cv2.waitKey(10000)
-
-
 def opencv_haar_detection(filepath: str) -> Tuple[int, list]:
     import cv2
 
