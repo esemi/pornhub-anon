@@ -32,6 +32,10 @@ def encode_faces(faces_path: str, limit_files=None) -> List[dict]:
 
 def clustering_faces(faces_path: str, dst_filepath: str, encodings: List[dict]) -> int:
     clean_destination(dst_filepath)
+
+    if not encodings:
+        return 0
+
     data = np.array(encodings)
     encodings = [d["encoding"] for d in data]
 

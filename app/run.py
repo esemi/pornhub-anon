@@ -5,7 +5,7 @@ from app.face_clustering import encode_faces, clustering_faces
 from app.face_detection import extract_faces, cascade_detection
 from app.video_to_frame import extract_frames, av_converter
 
-TEST_SOURCE_FOLDER = '/home/esemi/pornhub-anon-tmp/sources'
+TEST_SOURCE_FOLDER = '/tmp/xvideos-sources/'
 TEST_FRAMES_FOLDER = '/home/esemi/pornhub-anon-tmp/frames'
 TEST_FACES_FOLDER = '/home/esemi/pornhub-anon-tmp/faces'
 TEST_CLUSTERS_FOLDER = '/home/esemi/pornhub-anon-tmp/clusters'
@@ -16,7 +16,7 @@ if __name__ == '__main__':
 
     for root, dirs, files in os.walk(TEST_SOURCE_FOLDER):
         for i in files:
-            logging.info('process %s image', i)
+            logging.info('process %s video file', i)
             image_uid = i.split('.')[0]
             frames_count = extract_frames(os.path.join(TEST_SOURCE_FOLDER, i),
                                           os.path.join(TEST_FRAMES_FOLDER, image_uid), av_converter)
