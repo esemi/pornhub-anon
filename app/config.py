@@ -11,6 +11,11 @@ STOP_TAGS = {
     'famous',
 }
 
+REQUIRE_TAGS = {
+    'russian',
+    'amateur'
+}
+
 HOME_DIR = Path.home()
 APP_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 

@@ -7,15 +7,13 @@
 * ~detect faces cascade~
 * ~clustering same faces~
 * ~crawl videos (need select source)~
-* deploy w/ supervisor
-* collect faces DB (AWS Rekognition)
+* allow by tags (only russian and only amateur)
+* change to high quality
+* deploy w/ supervisord
+* load faces DB to AWS Recognition
 
 ## todo optional
-* crawl public faces DB
 * filter open eyes only
-* select best faces frame (RnD)
-* compare our abd public DBs
-* FindFace like service use for unknown persons
 
 
 ## links

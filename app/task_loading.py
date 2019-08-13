@@ -13,7 +13,7 @@ from typing import Optional
 
 import aiohttp
 
-from config import (STOP_TAGS, DOWNLOAD_LOCK, SOURCE_PATH, FIND_LINK_TIMEOUT, DB_FILE_CACHE_PATH, DB_FILE_URL)
+from config import (STOP_TAGS, REQUIRE_TAGS, DOWNLOAD_LOCK, SOURCE_PATH, FIND_LINK_TIMEOUT, DB_FILE_CACHE_PATH, DB_FILE_URL)
 from storage import create_conn, exist_video, add_video, close_conn
 from utils import video_stream_path
 
@@ -103,7 +103,7 @@ async def task(lock: Semaphore, video_id: int, stat: Counter):
     logging.info('download %s video', video_id)
 
 
-async def main(limit: int = 1):
+async def main(limit: int = 1, dry_run: bool = False):
     await create_conn(asyncio.get_event_loop())
     global_lock = Semaphore(DOWNLOAD_LOCK)
     dst_path = SOURCE_PATH
@@ -121,16 +121,28 @@ async def main(limit: int = 1):
             stat['already exist'] += 1
             continue
 
-        stop = False
+        stop_tag_occurrence = False
         for stop_word in STOP_TAGS:
             if stop_word in ','.join(tags):
-                logging.debug('skip by tag %s', stop_word)
-                stop = True
+                logging.debug('skip by stop tag %s', stop_word)
+                stop_tag_occurrence = True
                 break
-        if stop:
-            stat['skip by tag'] += 1
+        if stop_tag_occurrence:
+            stat['skip by has stop tag (OR)'] += 1
             continue
-        tasks.append(asyncio.ensure_future(task(global_lock, video_id, stat)))
+
+        stop_by_require_tags = False
+        for require_tag in REQUIRE_TAGS:
+            if require_tag not in ','.join(tags):
+                logging.debug('skip by require tag %s', require_tag)
+                stop_by_require_tags = True
+                break
+        if stop_by_require_tags:
+            stat['skip by dont has require tag (AND)'] += 1
+            continue
+
+        if not dry_run:
+            tasks.append(asyncio.ensure_future(task(global_lock, video_id, stat)))
 
         counter += 1
         if counter >= limit:
@@ -143,6 +155,8 @@ async def main(limit: int = 1):
 
 
 if __name__ == '__main__':
+    #  @fixme because of shit
+
     parser = argparse.ArgumentParser()
     parser.add_argument('success_limit', type=int, help='Limit of loaded streams')
     args = parser.parse_args()
