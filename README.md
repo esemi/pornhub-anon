@@ -1,37 +1,20 @@
-# Prototype of pornhub deanonimisation
+The pornhub de-anonymisation prototype
 ---
 
-## todo 
-* ~split video to frames~
-* ~detect faces~
-* ~detect faces cascade~
-* ~clustering same faces~
-* ~crawl videos (need select source)~
-* allow by tags (only russian and only amateur)
-* change to high quality
-* deploy w/ supervisord
-* load faces DB to AWS Recognition
-
-## todo optional
-* filter open eyes only
+### MVP pipeline
+- harvest video files
+- cut video into frames
+- look for frames with faces (quickly with noise)
+- clean up noise with cascade filters
+- upload embeddings to AWS Recognition
+- implement photo search
 
 
-## links
+### links
 
 * https://tjournal.ru/26824-polzovateli-dvacha-deanonimizirovali-rossiyskih-pornoaktris-s-pomoshchyu-findface
 * https://nakedsecurity.sophos.com/2017/02/06/neural-face-recognition-network-tuned-with-650000-pornstar-images/
 * https://nakedsecurity.sophos.com/2016/05/02/facial-recognition-used-to-strip-sex-workers-of-anonymity/
 * https://camgirl.id/
 * https://www.ambercutie.com/forums/threads/official-camgirl-id-acf-forum-thread.29006/
-
-
-## Setup and usage
-
-* sudo apt install redis python3.7 python-dev pkg-config 
-* sudo pat install libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev libswscale-dev libswresample-dev libavfilter-dev
-* sudo apt install libopenblas-dev liblapack-dev build-essential cmake libx11-dev libgtk-3-dev
-
-* fab -H pornanon@46.101.148.95 --prompt-for-login-password deploy
-* ./app/task_loading.py 1000
-* ./app/task_processing.py 1000
 
